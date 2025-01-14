@@ -1,0 +1,204 @@
+{
+    "blogs": [
+      {
+        "id": 1,
+        "title": "Understanding JavaScript Closures",
+        "author": "John Doe",
+        "date": "2025-01-10",
+        "shortDescription": "A brief overview of closures and how they work in JavaScript.",
+        "content": "Closures are one of the most powerful and often misunderstood features of JavaScript...",
+        "tags": ["JavaScript", "Programming"],
+        "image": "https://images.unsplash.com/photo-1667372393086-9d4001d51cf1",
+        "likes": 120,
+        "comments": [
+          {
+            "username": "Jane Smith",
+            "comment": "Great explanation, I finally understand closures!"
+          },
+          {
+            "username": "Tom Green",
+            "comment": "Very helpful, thanks for sharing!"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "CSS Grid vs Flexbox",
+        "author": "Jane Smith",
+        "date": "2025-01-05",
+        "shortDescription": "A comparison between CSS Grid and Flexbox layout systems.",
+        "content": "Both CSS Grid and Flexbox are powerful tools for creating layouts in CSS...",
+        "tags": ["CSS", "Web Development"],
+        "image": "https://images.unsplash.com/photo-1523437113738-bbd3cc89fb19",
+        "likes": 90,
+        "comments": [
+          {
+            "username": "John Doe",
+            "comment": "This cleared up the confusion I had between Grid and Flexbox!"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "How to Get Started with React",
+        "author": "Tom Green",
+        "date": "2024-12-20",
+        "shortDescription": "A step-by-step guide to building your first React app.",
+        "content": "React is a popular JavaScript library for building user interfaces...",
+        "tags": ["React", "JavaScript"],
+        "image": "https://images.unsplash.com/photo-1633356122102-3fe601e05bd2",
+        "likes": 150,
+        "comments": [
+          {
+            "username": "Jane Smith",
+            "comment": "React is awesome! Thanks for this guide."
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Boost Your Web Performance",
+        "author": "Alice Cooper",
+        "date": "2024-12-18",
+        "shortDescription": "Tips and tricks to improve your website’s performance.",
+        "content": "Website performance is crucial for user experience...",
+        "tags": ["Web Performance", "Optimization"],
+        "image": "https://images.unsplash.com/photo-1485856407642-7f9ba0268b51",
+        "likes": 175,
+        "comments": []
+      },
+      {
+        "id": 5,
+        "title": "Introduction to Node.js",
+        "author": "John Doe",
+        "date": "2024-12-12",
+        "shortDescription": "Learn the basics of Node.js, a JavaScript runtime built on Chrome's V8 engine.",
+        "content": "Node.js allows you to run JavaScript on the server...",
+        "tags": ["Node.js", "Backend"],
+        "image": "https://images.unsplash.com/photo-1543285198-3af15c4592ce",
+        "likes": 110,
+        "comments": []
+      },
+      {
+        "id": 6,
+        "title": "Creating REST APIs with Express.js",
+        "author": "Jane Smith",
+        "date": "2024-11-30",
+        "shortDescription": "A guide to building RESTful APIs using Express.js.",
+        "content": "Express.js is a minimal and flexible Node.js framework...",
+        "tags": ["Express.js", "API", "Backend"],
+        "image": "https://images.unsplash.com/photo-1660054373740-b8fc241e35f4",
+        "likes": 130,
+        "comments": []
+      },
+      {
+        "id": 7,
+        "title": "Mastering Async/Await in JavaScript",
+        "author": "Tom Green",
+        "date": "2024-11-15",
+        "shortDescription": "Understanding asynchronous programming using async/await.",
+        "content": "Async/await makes working with asynchronous JavaScript easier...",
+        "tags": ["JavaScript", "Async"],
+        "image": "https://images.unsplash.com/photo-1667372393086-9d4001d51cf1",
+        "likes": 140,
+        "comments": []
+      },
+      {
+        "id": 8,
+        "title": "A Guide to Responsive Web Design",
+        "author": "Alice Cooper",
+        "date": "2024-10-25",
+        "shortDescription": "How to make your websites responsive using CSS media queries.",
+        "content": "Responsive design ensures that websites work on all devices...",
+        "tags": ["CSS", "Responsive Design"],
+        "image": "https://images.unsplash.com/photo-1523437113738-bbd3cc89fb19",
+        "likes": 160,
+        "comments": []
+      },
+      {
+        "id": 9,
+        "title": "Understanding JavaScript Promises",
+        "author": "John Doe",
+        "date": "2024-10-10",
+        "shortDescription": "A comprehensive guide to JavaScript promises.",
+        "content": "Promises are used to handle asynchronous operations in JavaScript...",
+        "tags": ["JavaScript", "Promises"],
+        "image": "https://images.unsplash.com/photo-1667372393086-9d4001d51cf1",
+        "likes": 125,
+        "comments": []
+      },
+      {
+        "id": 10,
+        "title": "How to Optimize Images for Web",
+        "author": "Jane Smith",
+        "date": "2024-09-29",
+        "shortDescription": "Tips for optimizing images to improve website performance.",
+        "content": "Images are often the heaviest elements on a web page...",
+        "tags": ["Web Optimization", "Images"],
+        "image": "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5",
+        "likes": 90,
+        "comments": []
+      },
+      {
+        "id": 11,
+        "title": "Getting Started with Bootstrap",
+        "author": "Tom Green",
+        "date": "2024-09-20",
+        "shortDescription": "Learn the basics of Bootstrap and how to quickly build responsive websites.",
+        "content": "Bootstrap is a popular CSS framework for building responsive, mobile-first websites...",
+        "tags": ["Bootstrap", "CSS"],
+        "image": "https://images.unsplash.com/photo-1517180102446-f3ece451e9d8",
+        "likes": 115,
+        "comments": []
+      },
+      {
+        "id": 12,
+        "title": "The Importance of Web Accessibility",
+        "author": "Alice Cooper",
+        "date": "2024-09-15",
+        "shortDescription": "Why web accessibility matters and how to implement it.",
+        "content": "Web accessibility ensures that your website can be used by everyone...",
+        "tags": ["Accessibility", "Web Development"],
+        "image": "https://images.unsplash.com/photo-1485856407642-7f9ba0268b51",
+        "likes": 135,
+        "comments": []
+      },
+      {
+        "id": 13,
+        "title": "A Guide to Version Control with Git",
+        "author": "John Doe",
+        "date": "2024-09-05",
+        "shortDescription": "Learn how to use Git for version control in your projects.",
+        "content": "Git is an essential tool for version control and collaboration...",
+        "tags": ["Git", "Version Control"],
+        "image": "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb",
+        "likes": 170,
+        "comments": []
+      },
+      {
+        "id": 14,
+        "title": "Building Single Page Apps with React",
+        "author": "Jane Smith",
+        "date": "2024-08-25",
+        "shortDescription": "A tutorial on building SPAs with React.js.",
+        "content": "Single Page Applications (SPAs) provide a smoother user experience...",
+        "tags": ["React", "SPA"],
+        "image": "https://images.unsplash.com/photo-1633356122102-3fe601e05bd2",
+        "likes": 190,
+        "comments": []
+      },
+      {
+        "id": 15,
+        "title": "Introduction to TypeScript",
+        "author": "Tom Green",
+        "date": "2024-08-10",
+        "shortDescription": "Get started with TypeScript, a typed superset of JavaScript.",
+        "content": "TypeScript adds static typing to JavaScript, making it easier to catch errors...",
+        "tags": ["TypeScript", "JavaScript"],
+        "image": "https://images.unsplash.com/photo-1699885960867-56d5f5262d38",
+        "likes": 150,
+        "comments": []
+      }
+    ]
+  }
+  

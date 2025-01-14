@@ -1,0 +1,239 @@
+/* Ensure the blog card has the same height for each blog */
+.blog-card {
+  display: flex;
+  flex-direction: column;
+  height: 450px;
+  min-height: 400px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff;
+  width: 100%;
+  max-width: 300px;
+  word-wrap: break-word;
+}
+
+.blog-card img {
+  height: 200px;
+  object-fit: cover;
+  width: 100%;
+}
+
+.blog-card h5 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  height: 50px;
+  flex-shrink: 0;
+  margin: 0;
+  word-wrap: break-word;
+}
+
+.blog-card p.card-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  height: 70px;
+  flex-shrink: 0;
+  margin: 0;
+  padding-top: 5px;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+.blog-card-body {
+  flex-grow: 1;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-text {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.blog-card .author-date {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #888;
+  margin-bottom: 10px;
+}
+
+.blog-card .btn {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  align-self: flex-start;
+}
+
+.blog-card .btn:hover {
+  background-color: #0056b3;
+}
+
+.row {
+  margin: 0;
+}
+
+.col-lg-3, .col-md-4, .col-sm-6, .col-12 {
+  display: flex;
+  justify-content: center;
+}
+
+/* Make sure pagination looks centered */
+.pagination {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.pagination li {
+  margin: 0 5px;
+}
+
+.pagination .page-item {
+  cursor: pointer;
+}
+
+
+/* Blog Details Page Styling */
+.blog-detail {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.blog-detail img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+  .blog-detail img {
+    max-height: 300px;
+    max-width: 70%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .blog-detail img {
+    max-height: 250px;
+    max-width: 60%;
+  }
+}
+
+.blog-detail h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.actions {
+  display: flex;
+  justify-content: center; /* Centers the buttons horizontally */
+  align-items: center;      /* Aligns the buttons vertically (if necessary) */
+  flex-wrap: wrap;          /* Allows buttons to wrap on smaller screens */
+  margin-top: 20px;
+  text-align: center;       /* Ensure centering inside the container */
+}
+
+.actions button {
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin: 5px;              /* Adds space between buttons */
+  transition: all 0.3s ease;
+}
+
+.actions #like-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.actions #comment-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.actions #share-button {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.actions button:hover {
+  transform: scale(1.1);
+}
+
+.comment-form-container,
+.share-options {
+  display: none;
+  margin-top: 20px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: transform 1s ease, opacity 1s ease;
+}
+
+.share-options {
+  display: flex;
+  justify-content: center; /* Center buttons horizontally */
+  align-items: center;     /* Center buttons vertically */
+  flex-wrap: wrap;         /* Allow buttons to wrap on smaller screens */
+  gap: 10px;               /* Add space between buttons */
+  margin-top: 20px; 
+}
+
+.share-options button {
+  font-size: 1rem;
+  margin: 0; /* Remove margin from individual buttons */
+}
+.show-share {
+  display: flex;           /* Ensure display is flex when shown */
+  opacity: 1;              /* Full opacity */
+  transform: translateY(0); /* No translation when shown */
+  transition: transform 1s ease, opacity 1s ease;
+}
+
+.show-form {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.comments-section {
+  margin-top: 20px;
+}
+
+.comment-item {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+.comment-item:last-child {
+  border-bottom: none;
+}
+
+.error {
+  color: red;
+  font-size: 0.9rem;
+}
+
+.success-message {
+  color: green;
+  font-size: 1rem;
+  margin-top: 10px;
+}
