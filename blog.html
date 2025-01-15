@@ -152,6 +152,28 @@
     });
   
     // Comment form submission with validation
+    const nameInput = document.getElementById('name');
+    const commentInput = document.getElementById('comment');
+    const nameError = document.getElementById('name-error');
+    const commentError = document.getElementById('comment-error');
+
+    // Validation while typing
+    nameInput.addEventListener('input', function () {
+      if (nameInput.value.trim() === '') {
+        nameError.innerText = 'Name field should not be empty.';
+      } else if (!/^[a-zA-Z\s]+$/.test(nameInput.value)) {
+        nameError.innerText = 'Name should only contain letters and spaces.';
+      } else {
+        nameError.innerText = '';
+      }
+    });
+
+    commentInput.addEventListener('input', function () {
+    if (commentInput.value.trim() !== '') {
+    commentError.innerText = ''; // Remove error message when user starts typing
+    }
+});
+
     document.getElementById('commentForm').addEventListener('submit', function(event) {
       event.preventDefault();
   

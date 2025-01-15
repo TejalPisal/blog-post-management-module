@@ -9,7 +9,15 @@ let blogsPerPage = 8;
 async function fetchBlogs() {
   try {
     const response = await fetch('blogs.json');
-    blogs = await response.json();
+    const data = await response.json();
+    
+    // Access the 'blogs' property from the fetched data
+    if (Array.isArray(data.blogs)) {
+      blogs = data.blogs; // Assign blogs to the array from the 'blogs' property
+    } else {
+      console.error("Fetched data does not contain an array in 'blogs':", data);
+    }
+
     displayBlogs();
     createPagination();
   } catch (error) {
@@ -24,29 +32,33 @@ function displayBlogs() {
   const startIndex = (currentPage - 1) * blogsPerPage;
   const endIndex = currentPage * blogsPerPage;
 
-  const currentBlogs = blogs.blogs.slice(startIndex, endIndex);
+  if (Array.isArray(blogs)) {
+    const currentBlogs = blogs.slice(startIndex, endIndex);
 
-  currentBlogs.forEach(blog => {
-    const blogCard = `
-      <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-        <div class="card blog-card">
-          <img src="${blog.image}" class="card-img-top" alt="${blog.title}">
-          <div class="card-body blog-card-body">
-            <h5 class="card-title">${blog.title}</h5>
-            <p class="card-text">${blog.shortDescription}</p>
-            <p class="author-date"><small class="text-muted">By ${blog.author} on ${blog.date}</small></p>
-            <a href="blog.html?id=${blog.id}" class="btn btn-primary">Read More</a>
+    currentBlogs.forEach(blog => {
+      const blogCard = `
+        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+          <div class="card blog-card">
+            <img src="${blog.image}" class="card-img-top" alt="${blog.title}">
+            <div class="card-body blog-card-body">
+              <h5 class="card-title">${blog.title}</h5>
+              <p class="card-text">${blog.shortDescription}</p>
+              <p class="author-date"><small class="text-muted">By ${blog.author} on ${blog.date}</small></p>
+              <a href="blog.html?id=${blog.id}" class="btn btn-primary">Read More</a>
+            </div>
           </div>
         </div>
-      </div>
-    `;
-    blogListElement.innerHTML += blogCard;
-  });
+      `;
+      blogListElement.innerHTML += blogCard;
+    });
+  } else {
+    console.error("Blogs is not an array:", blogs);
+  }
 }
 
 // Create pagination controls
 function createPagination() {
-  const totalBlogs = blogs.blogs.length;
+  const totalBlogs = blogs.length;
   const totalPages = Math.ceil(totalBlogs / blogsPerPage);
   paginationElement.innerHTML = "";
 
@@ -81,11 +93,11 @@ function adjustBlogCountBasedOnScreenSize() {
   } else {
     blogsPerPage = 6; // For mobile devices
   }
-  // currentPage = 1; // Reset to the first page
+
   const storedPage = sessionStorage.getItem('currentPage');
   if (storedPage) {
-  currentPage = parseInt(storedPage, 10); // Use stored page if available
-}
+    currentPage = parseInt(storedPage, 10); // Use stored page if available
+  }
   displayBlogs();
 }
 
