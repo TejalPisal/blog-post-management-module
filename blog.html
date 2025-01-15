@@ -1,271 +1,332 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog Detail</title>
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog Detail</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <!-- Button to navigate back to the blog list -->
+      <a href="index.html" class="btn btn-primary mb-4">Back to Blog</a>
+      <!-- Container for displaying blog details -->
+      <div id="blog-detail" class="blog-detail"></div>
+      <!-- Container for displaying comments -->
+      <div id="comments-section" class="comments-section"></div>
 
-  <link rel="stylesheet" href="style.css">
+      <!-- Actions section: like, comment, share buttons -->
+      <div class="actions mt-4">
+        <button class="btn btn-primary" id="like-button">
+          <i class="bi bi-hand-thumbs-up"></i>
+          <span id="like-count"></span>
+        </button>
+        <button class="btn btn-success" id="comment-button">
+          <i class="bi bi-chat-dots"></i>
+        </button>
+        <button class="btn btn-info" id="share-button">
+          <i class="bi bi-share-fill"></i>
+        </button>
+      </div>
 
-</head>
-<body>
-  <div class="container mt-5">
-    <a href="index.html" class="btn btn-primary mb-4">Back to Blog</a>
-    <div id="blog-detail" class="blog-detail"></div>
+      <!-- Comment form section -->
+      <div id="comment-form" class="comment-form-container mt-4">
+        <h5>Add a Comment</h5>
+        <form id="commentForm">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              placeholder="Enter your name"
+            />
+            <span id="name-error" class="error"></span>
+          </div>
+          <div class="form-group">
+            <label for="comment">Comment</label>
+            <textarea
+              class="form-control"
+              id="comment"
+              rows="3"
+              placeholder="Your comment"
+            ></textarea>
+            <span id="comment-error" class="error"></span>
+          </div>
+          <button type="submit" class="btn btn-success">Submit</button>
+        </form>
+      </div>
 
-    <div id="comments-section" class="comments-section"></div>
+      <!-- Share options -->
+      <div id="share-options" class="share-options">
+        <button class="btn btn-info" onclick="shareOnWhatsApp()">
+          <i class="bi bi-whatsapp"></i>
+        </button>
+        <button class="btn btn-info" onclick="shareOnFacebook()">
+          <i class="bi bi-facebook"></i>
+        </button>
+        <button class="btn btn-info" onclick="shareOnLinkedIn()">
+          <i class="bi bi-linkedin"></i>
+        </button>
+        <button class="btn btn-info" onclick="shareOnTwitter()">
+          <i class="bi bi-twitter"></i>
+        </button>
+      </div>
 
-    <div class="actions mt-4">
-      <button class="btn btn-primary" id="like-button">
-         <i class="bi bi-hand-thumbs-up"></i> 
-         <span id="like-count"></span></button>
-      <button class="btn btn-success" id="comment-button">
-        <i class="bi bi-chat-dots"></i>
-      </button>
-      <button class="btn btn-info" id="share-button">
-        <i class="bi bi-share-fill"></i>
-      </button>
+      <!-- Success Message -->
+      <div id="success-message" class="success-message" style="display: none">
+        Your comment was submitted successfully!
+      </div>
     </div>
 
-    <!-- Comment form -->
-    <div id="comment-form" class="comment-form-container mt-4">
-      <h5>Add a Comment</h5>
-      <form id="commentForm">
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input type="text" class="form-control" id="name" placeholder="Enter your name">
-          <span id="name-error" class="error"></span>
-        </div>
-        <div class="form-group">
-          <label for="comment">Comment</label>
-          <textarea class="form-control" id="comment" rows="3" placeholder="Your comment"></textarea>
-          <span id="comment-error" class="error"></span>
-        </div>
-        <button type="submit" class="btn btn-success">Submit</button>
-      </form>
-    </div>
+    <script>
+      let likeCount = 0;
+      let isLiked = false;
 
-    <!-- Share options -->
-<div id="share-options" class="share-options">
-    <button class="btn btn-info" onclick="shareOnWhatsApp()"><i class="bi bi-whatsapp"></i></button>
-    <button class="btn btn-info" onclick="shareOnFacebook()"><i class="bi bi-facebook"></i></button>
-    <button class="btn btn-info" onclick="shareOnLinkedIn()"><i class="bi bi-linkedin"></i></button>
-    <button class="btn btn-info" onclick="shareOnTwitter()"><i class="bi bi-twitter"></i></button>
-  </div>
-  
+      // Get the blog ID from the URL query parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      const blogId = parseInt(urlParams.get("id"), 10);
 
-    <!-- Success Message -->
-    <div id="success-message" class="success-message" style="display: none;">Your comment was submitted successfully!</div>
-  </div>
+      // Fetch the blog details from blog.json
+      fetch("blogs.json")
+        .then((response) => response.json())
+        .then((data) => {
+          const blog = data.blogs.find((b) => b.id === blogId);
+          displayBlogDetail(blog);
+          displayComments(blog.comments);
+        });
 
-  <script>
-    let likeCount = 0;
-    let isLiked = false;
+      // Store the current page URL to sessionStorage for back navigation
+      sessionStorage.setItem("previousPage", window.location.href);
 
-    // Get the blog ID from the URL query parameter
-    const urlParams = new URLSearchParams(window.location.search);
-    const blogId = parseInt(urlParams.get('id'), 10);
-  
-    // Fetch the blog details from blog.json
-    fetch('blogs.json')
-      .then(response => response.json())
-      .then(data => {
-        // const blogId = 1;
-        const blog = data.blogs.find(b => b.id === blogId);
-        displayBlogDetail(blog);
-        displayComments(blog.comments);
-      });
-
-    // Store the current page in sessionStorage when navigating to a blog detail page
-    sessionStorage.setItem('previousPage', window.location.href);
-  
-    function displayBlogDetail(blog) {
-      const blogDetailDiv = document.getElementById('blog-detail');
-      blogDetailDiv.innerHTML = ` 
+      // Function to display blog details dynamically
+      function displayBlogDetail(blog) {
+        const blogDetailDiv = document.getElementById("blog-detail");
+        blogDetailDiv.innerHTML = ` 
         <h2>${blog.title}</h2> 
         <p class="text-muted">${blog.author} - ${blog.date}</p> 
         <img src="${blog.image}" alt="${blog.title}" class="img-fluid mb-3"> 
         <p>${blog.content}</p> 
         <div> 
-          <strong>Tags:</strong> ${blog.tags.join(', ')} 
+          <strong>Tags:</strong> ${blog.tags.join(", ")} 
         </div> 
       `;
-      document.getElementById('like-count').innerText = `(${blog.likes})`;
-      likeCount = blog.likes;
-    }
-  
-    // Like button functionality
-    document.getElementById('like-button').addEventListener('click', function() {
-      isLiked = !isLiked;
-      likeCount = isLiked ? likeCount + 1 : likeCount - 1;
-      document.getElementById('like-count').innerText = `(${likeCount})`;
-      
-      // Hide other interactive sections
-      document.getElementById('comment-form').classList.remove('show-form');
-      document.getElementById('share-options').classList.remove('show-share');
-    });
-
-    
-  // Back button functionality to return to the main blog list page
-    document.querySelector('a.btn-primary').addEventListener('click', function(event) {
-    event.preventDefault();
-    window.location.href = 'index.html'; // Always go back to the main blog list
-    });
-
-    // Comment form toggle with sliding effect and auto-scroll
-    document.getElementById('comment-button').addEventListener('click', function() {
-      const commentForm = document.getElementById('comment-form');
-      const isCommentFormVisible = commentForm.classList.contains('show-form');
-      commentForm.classList.toggle('show-form', !isCommentFormVisible);
-
-      // Reset the form and clear error messages
-      if (!isCommentFormVisible) {
-        document.getElementById('name-error').innerText = '';
-        document.getElementById('comment-error').innerText = '';
-        document.getElementById('commentForm').reset();
+        document.getElementById("like-count").innerText = `(${blog.likes})`;
+        likeCount = blog.likes;
       }
 
-      // Hide share options
-      document.getElementById('share-options').classList.remove('show-share');
+      // Like button functionality
+      document
+        .getElementById("like-button")
+        .addEventListener("click", function () {
+          isLiked = !isLiked;
+          likeCount = isLiked ? likeCount + 1 : likeCount - 1;
+          document.getElementById("like-count").innerText = `(${likeCount})`;
 
-      // Auto-scroll to the comment form if it's visible
-      if (!isCommentFormVisible) {
-        commentForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
-  
-    // Share options toggle with sliding effect
-    document.getElementById('share-button').addEventListener('click', function() {
-      const shareOptions = document.getElementById('share-options');
-      const isShareOptionsVisible = shareOptions.classList.contains('show-share');
-      shareOptions.classList.toggle('show-share', !isShareOptionsVisible);
-      
-      // Hide comment form
-      document.getElementById('comment-form').classList.remove('show-form');
+          // Hide other interactive sections
+          document.getElementById("comment-form").classList.remove("show-form");
+          document
+            .getElementById("share-options")
+            .classList.remove("show-share");
+        });
 
-      // Auto-scroll to the share options if visible
-      if (!isShareOptionsVisible) {
-        shareOptions.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
-  
-    // Comment form submission with validation
-    const nameInput = document.getElementById('name');
-    const commentInput = document.getElementById('comment');
-    const nameError = document.getElementById('name-error');
-    const commentError = document.getElementById('comment-error');
+      // Back button functionality to return to the main blog list page
+      document
+        .querySelector("a.btn-primary")
+        .addEventListener("click", function (event) {
+          event.preventDefault();
+          window.location.href = "index.html"; // Always go back to the main blog list
+        });
 
-    // Validation while typing
-    nameInput.addEventListener('input', function () {
-      if (nameInput.value.trim() === '') {
-        nameError.innerText = 'Name field should not be empty.';
-      } else if (!/^[a-zA-Z\s]+$/.test(nameInput.value)) {
-        nameError.innerText = 'Name should only contain letters and spaces.';
-      } else {
-        nameError.innerText = '';
-      }
-    });
+      // Comment form toggle with sliding effect and auto-scroll
+      document
+        .getElementById("comment-button")
+        .addEventListener("click", function () {
+          const commentForm = document.getElementById("comment-form");
+          const isCommentFormVisible =
+            commentForm.classList.contains("show-form");
+          commentForm.classList.toggle("show-form", !isCommentFormVisible);
 
-    commentInput.addEventListener('input', function () {
-    if (commentInput.value.trim() !== '') {
-    commentError.innerText = ''; // Remove error message when user starts typing
-    }
-});
+          // Reset the form and clear error messages
+          if (!isCommentFormVisible) {
+            document.getElementById("name-error").innerText = "";
+            document.getElementById("comment-error").innerText = "";
+            document.getElementById("commentForm").reset();
+          }
 
-    document.getElementById('commentForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-  
-      // Clear previous errors
-      document.getElementById('name-error').innerText = '';
-      document.getElementById('comment-error').innerText = '';
-  
-      const name = document.getElementById('name').value;
-      const comment = document.getElementById('comment').value;
-      let hasError = false;
-  
-      if (name.trim() === '') {
-        document.getElementById('name-error').innerText = 'Name field should not be empty.';
-        hasError = true;
-      } else if (!/^[a-zA-Z\s]+$/.test(name)) {
-        document.getElementById('name-error').innerText = 'Name should only contain letters and spaces.';
-        hasError = true;
-      }
-  
-      if (comment.trim() === '') {
-        document.getElementById('comment-error').innerText = 'Comment cannot be empty.';
-        hasError = true;
-      }
-  
-      if (!hasError) {
-        const newComment = {
-          username: name,
-          comment: comment
-        };
-  
-        displayNewComment(newComment);
-        document.getElementById('commentForm').reset();
-        document.getElementById('comment-form').classList.remove('show-form'); // Hide the form
-        
-        // Display success message
-        const successMessage = document.getElementById('success-message');
-        successMessage.style.display = 'block';
-        setTimeout(() => successMessage.style.display = 'none', 3000);
-      }
-    });
-  
-    // Display existing comments
-    function displayComments(comments) {
-      const commentsSection = document.getElementById('comments-section');
-      commentsSection.innerHTML = comments.map(c => ` 
+          // Hide share options
+          document
+            .getElementById("share-options")
+            .classList.remove("show-share");
+
+          // Auto-scroll to the comment form if it's visible
+          if (!isCommentFormVisible) {
+            commentForm.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        });
+
+      // Share options toggle with sliding effect
+      document
+        .getElementById("share-button")
+        .addEventListener("click", function () {
+          const shareOptions = document.getElementById("share-options");
+          const isShareOptionsVisible =
+            shareOptions.classList.contains("show-share");
+          shareOptions.classList.toggle("show-share", !isShareOptionsVisible);
+
+          // Hide comment form
+          document.getElementById("comment-form").classList.remove("show-form");
+
+          // Auto-scroll to the share options if visible
+          if (!isShareOptionsVisible) {
+            shareOptions.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        });
+
+      // Comment form submission with validation
+      const nameInput = document.getElementById("name");
+      const commentInput = document.getElementById("comment");
+      const nameError = document.getElementById("name-error");
+      const commentError = document.getElementById("comment-error");
+
+      // Validation while typing
+      nameInput.addEventListener("input", function () {
+        if (nameInput.value.trim() === "") {
+          nameError.innerText = "Name field should not be empty.";
+        } else if (!/^[a-zA-Z\s]+$/.test(nameInput.value)) {
+          nameError.innerText = "Name should only contain letters and spaces.";
+        } else {
+          nameError.innerText = "";
+        }
+      });
+
+      commentInput.addEventListener("input", function () {
+        if (commentInput.value.trim() !== "") {
+          commentError.innerText = "";
+        }
+      });
+
+      // Comment input validation while typing
+      document
+        .getElementById("commentForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          // Reset error messages
+          document.getElementById("name-error").innerText = "";
+          document.getElementById("comment-error").innerText = "";
+
+          // Get values from the input fields
+          const name = document.getElementById("name").value;
+          const comment = document.getElementById("comment").value;
+          let hasError = false;
+          // Validate the name field
+          if (name.trim() === "") {
+            document.getElementById("name-error").innerText =
+              "Name field should not be empty.";
+            hasError = true;
+          } else if (!/^[a-zA-Z\s]+$/.test(name)) {
+            document.getElementById("name-error").innerText =
+              "Name should only contain letters and spaces.";
+            hasError = true;
+          }
+
+          // Validate the comment field
+          if (comment.trim() === "") {
+            document.getElementById("comment-error").innerText =
+              "Comment cannot be empty.";
+            hasError = true;
+          }
+
+          if (!hasError) {
+            const newComment = {
+              username: name,
+              comment: comment,
+            };
+
+            displayNewComment(newComment);
+            document.getElementById("commentForm").reset();
+            document
+              .getElementById("comment-form")
+              .classList.remove("show-form");
+
+            // Display success message
+            const successMessage = document.getElementById("success-message");
+            successMessage.style.display = "block";
+            setTimeout(() => (successMessage.style.display = "none"), 3000);
+          }
+        });
+
+      // Display existing comments
+      function displayComments(comments) {
+        const commentsSection = document.getElementById("comments-section");
+        commentsSection.innerHTML = comments
+          .map(
+            (c) => ` 
         <div class="comment-item">
           <strong>${c.username}</strong>
           <p>${c.comment}</p>
         </div>
-      `).join('');
-    }
-  
-    // Display new comment below existing comments
-    function displayNewComment(comment) {
-      const commentsSection = document.getElementById('comments-section');
-      const newCommentHTML = ` 
+      `
+          )
+          .join("");
+      }
+
+      // Display new comment below existing comments
+      function displayNewComment(comment) {
+        const commentsSection = document.getElementById("comments-section");
+        const newCommentHTML = ` 
         <div class="comment-item">
           <strong>${comment.username}</strong>
           <p>${comment.comment}</p>
         </div>
       `;
-      commentsSection.innerHTML += newCommentHTML; // Add the new comment at the bottom
-    }
-    // Get the current blog URL
-const blogUrl = window.location.href; // You can customize this if needed
+        commentsSection.innerHTML += newCommentHTML;
+      }
+      // Get the current blog URL
+      const blogUrl = window.location.href;
 
-// WhatsApp sharing function
-function shareOnWhatsApp() {
-  const blogTitle = document.querySelector('h2').innerText;
-  const blogUrl = window.location.href; 
-  const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(blogTitle + ' - ' + blogUrl)}`;
-  window.open(whatsappUrl, '_blank');
-}
-// FaceBook sharing function
-function shareOnFacebook() {
-  const blogUrl = window.location.href; 
-  const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(blogUrl)}`;
-  window.open(facebookUrl, '_blank');
-}
-// LinkdIn sharing function
-function shareOnLinkedIn() {
-  const blogUrl = window.location.href; 
-  const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(blogUrl)}`;
-  window.open(linkedinUrl, '_blank');
-}
-// Twitter sharing function
-function shareOnTwitter() {
-  const blogTitle = document.querySelector('h2').innerText;
-  const blogUrl = window.location.href; 
-  const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(blogTitle)}&url=${encodeURIComponent(blogUrl)}`;
-  window.open(twitterUrl, '_blank');
-}
-  </script>
-</body>
+      // WhatsApp sharing function
+      function shareOnWhatsApp() {
+        const blogTitle = document.querySelector("h2").innerText;
+        const blogUrl = window.location.href;
+        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(
+          blogTitle + " - " + blogUrl
+        )}`;
+        window.open(whatsappUrl, "_blank");
+      }
+      // FaceBook sharing function
+      function shareOnFacebook() {
+        const blogUrl = window.location.href;
+        const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+          blogUrl
+        )}`;
+        window.open(facebookUrl, "_blank");
+      }
+      // LinkdIn sharing function
+      function shareOnLinkedIn() {
+        const blogUrl = window.location.href;
+        const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+          blogUrl
+        )}`;
+        window.open(linkedinUrl, "_blank");
+      }
+      // Twitter sharing function
+      function shareOnTwitter() {
+        const blogTitle = document.querySelector("h2").innerText;
+        const blogUrl = window.location.href;
+        const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+          blogTitle
+        )}&url=${encodeURIComponent(blogUrl)}`;
+        window.open(twitterUrl, "_blank");
+      }
+    </script>
+  </body>
 </html>

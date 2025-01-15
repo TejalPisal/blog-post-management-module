@@ -10,6 +10,7 @@
 </head>
 <body>
   <div class="container mt-5">
+    <!-- Container for Back Button and Edit Button -->
     <div class="d-flex justify-content-between mb-4">
       <a href="index.html" class="btn btn-primary">Back to Blog</a>
       <button id="editButton" class="btn btn-warning" style="display: none;">Edit</button>
@@ -17,30 +18,35 @@
 
     <h2>Create/Edit Blog</h2>
     <form id="blogForm">
+      <!-- Input for Blog Title -->
       <div class="form-group">
         <label for="title">Title <i class="fas fa-edit edit-icon" id="editTitle" style="display: none;"></i></label>
         <input type="text" class="form-control" id="title" required>
         <small class="error" id="titleError" style="display: none;">Title is required.</small>
       </div>
 
+      <!-- Input for Short Description -->
       <div class="form-group">
         <label for="shortDescription">Short Description <i class="fas fa-edit edit-icon" id="editShortDescription" style="display: none;"></i></label>
         <input type="text" class="form-control" id="shortDescription" required>
         <small class="error" id="shortDescriptionError" style="display: none;">Short Description is required.</small>
       </div>
 
+      <!-- Input for Blog Content -->
       <div class="form-group">
         <label for="content">Content <i class="fas fa-edit edit-icon" id="editContent" style="display: none;"></i></label>
         <textarea class="form-control" id="content" rows="4" required></textarea>
         <small class="error" id="contentError" style="display: none;">Content is required.</small>
       </div>
-
+      
+      <!-- Input for Tags -->
       <div class="form-group">
         <label for="tags">Tags (Comma separated) <i class="fas fa-edit edit-icon" id="editTags" style="display: none;"></i></label>
         <input type="text" class="form-control" id="tags" required>
         <small class="error" id="tagsError" style="display: none;">Tags are required.</small>
       </div>
 
+      <!-- Input for Image Upload -->
       <div class="form-group">
         <label for="image">Image <i class="fas fa-edit edit-icon" id="editImage" style="display: none;"></i></label>
         <input type="file" class="form-control" id="image" required>
@@ -48,6 +54,7 @@
         <small class="error" id="imageError" style="display: none;">Image is required.</small>
       </div>
 
+      <!-- Form Submit Buttons -->
       <button type="submit" class="btn btn-success" id="createButton">Create Blog</button>
       <button type="button" class="btn btn-secondary" id="cancelButton" style="display: none;" onclick="cancelEdit()">Cancel</button>
       <button type="button" class="btn btn-info" id="saveChangesButton" style="display: none;" onclick="saveChanges()">Save Changes</button>
@@ -60,12 +67,14 @@
     // Clear session storage on every page load (refresh or back button)
     sessionStorage.removeItem('blogs');
 
-    // Blog array initialized as empty on every load
+    // Initialize an empty blog array
     let blogs = [];
 
+    // Event listener for form submission to handle blog creation/editing
     document.getElementById('blogForm').addEventListener('submit', function (event) {
       event.preventDefault();
 
+      // Gather form data
       const title = document.getElementById('title').value.trim();
       const shortDescription = document.getElementById('shortDescription').value.trim();
       const content = document.getElementById('content').value.trim();
@@ -125,10 +134,10 @@
           image: image ? URL.createObjectURL(image) : null,
         };
 
-        // If we're editing a blog, update it; otherwise, add a new blog
+        // If editing, update the blog; else, add a new blog
         const blogId = sessionStorage.getItem('editBlogId');
         if (blogId) {
-          blogs[blogId] = blogData;  // Edit the existing blog
+          blogs[blogId] = blogData;  
           sessionStorage.removeItem('editBlogId');
         } else {
           blogData.id = blogs.length + 1;
@@ -142,9 +151,10 @@
       }
     });
 
+    // Function to display saved blogs on the page
     function displayCreatedBlog() {
       const blogList = document.getElementById('blogList');
-      blogList.innerHTML = ''; // Clear current blog list
+      blogList.innerHTML = ''; 
 
       const savedBlogs = JSON.parse(sessionStorage.getItem('blogs'));
 
@@ -153,8 +163,7 @@
           const blogCard = document.createElement('div');
           blogCard.classList.add('card', 'mb-4', 'blog-card', 'fade-in');
           
-          // Check if image exists or provide a placeholder
-          
+          // Set the image or use placeholder if not available
           const imageSrc = blog.image ? blog.image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOwRConBYl2t6L8QMOAQqa5FDmPB_bg7EnGA&s';
 
           blogCard.innerHTML = ` 
@@ -175,48 +184,52 @@
       }
     }
 
+    // Function to reset the form after submission
     function resetForm() {
       document.getElementById('blogForm').reset();
-      document.getElementById('createButton').style.display = 'inline-block'; // Show Create button
-      document.getElementById('cancelButton').style.display = 'none'; // Hide Cancel button
-      document.getElementById('saveChangesButton').style.display = 'none'; // Hide Save Changes button
-      document.getElementById('imagePreview').style.display = 'none'; // Hide image preview
+      document.getElementById('createButton').style.display = 'inline-block';
+      document.getElementById('cancelButton').style.display = 'none'; 
+      document.getElementById('saveChangesButton').style.display = 'none'; 
+      document.getElementById('imagePreview').style.display = 'none'; 
     }
 
+    // Function to handle canceling the edit
     function cancelEdit() {
-      resetForm(); // Reset the form when cancel is clicked
+      resetForm();
     }
 
+    // Function to load the blog data into the form for editing
     function editBlog(blogId) {
-  const blog = blogs[blogId];
-
-  // Scroll smoothly to the form
-  document.querySelector('html').scrollIntoView({ behavior: 'smooth' });
-
-  // Set the form values with the blog data
-  document.getElementById('title').value = blog.title;
-  document.getElementById('shortDescription').value = blog.shortDescription;
-  document.getElementById('content').value = blog.content;
-  document.getElementById('tags').value = blog.tags.join(', ');
-
-  // Set the image field to show a placeholder or message about existing image, not the preview
-  const imageInput = document.getElementById('image');
-  imageInput.value = ""; // Clear the file input value to ensure a fresh selection
-  imageInput.placeholder = blog.image ? "Image already uploaded: " + blog.image : "";
-
-  // Hide the image preview
-  document.getElementById('imagePreview').style.display = 'none';
-
-  // Show save changes button and hide create button
-  document.getElementById('createButton').style.display = 'none';
-  document.getElementById('cancelButton').style.display = 'inline-block';
-  document.getElementById('saveChangesButton').style.display = 'inline-block';
-
-  // Set the blogId to session storage for reference
-  sessionStorage.setItem('editBlogId', blogId);
-}
+    const blog = blogs[blogId];
 
 
+    // Scroll smoothly to the form
+    document.querySelector('html').scrollIntoView({ behavior: 'smooth' });
+
+    // Set the form values with the blog data
+    document.getElementById('title').value = blog.title;
+    document.getElementById('shortDescription').value = blog.shortDescription;
+    document.getElementById('content').value = blog.content;
+    document.getElementById('tags').value = blog.tags.join(', ');
+
+    // Clear the file input and show placeholder for image
+    const imageInput = document.getElementById('image');
+    imageInput.value = ""; 
+    imageInput.placeholder = blog.image ? "Image already uploaded: " + blog.image : "";
+
+    // Hide the image preview
+    document.getElementById('imagePreview').style.display = 'none';
+
+    // Show save changes and cancel buttons, hide create button
+    document.getElementById('createButton').style.display = 'none';
+    document.getElementById('cancelButton').style.display = 'inline-block';
+    document.getElementById('saveChangesButton').style.display = 'inline-block';
+
+    // Set the blogId to session storage for reference
+    sessionStorage.setItem('editBlogId', blogId);
+  }
+
+    // Function to save changes made to a blog
     function saveChanges() {
       const blogId = sessionStorage.getItem('editBlogId');
       if (blogId !== null) {
@@ -236,6 +249,7 @@
       resetForm();
     }
 
+    // Function to delete a specific blog
     function deleteBlog(blogId) {
       if (confirm('Are you sure you want to delete this blog?')) {
         blogs.splice(blogId, 1);
@@ -259,7 +273,7 @@
       }
     });
 
-    // Display any previously saved blogs
+    // On page load, display any previously saved blogs
     displayCreatedBlog();
   </script>
 </body>

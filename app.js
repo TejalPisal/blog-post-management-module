@@ -5,19 +5,20 @@ let blogs = [];
 let currentPage = 1;
 let blogsPerPage = 8;
 
-// Fetch the blog data from blogs.json
+// Function to fetch the blog data from blogs.json
 async function fetchBlogs() {
   try {
     const response = await fetch('blogs.json');
     const data = await response.json();
     
-    // Access the 'blogs' property from the fetched data
+    // Check if the fetched data contains an array of blogs
     if (Array.isArray(data.blogs)) {
-      blogs = data.blogs; // Assign blogs to the array from the 'blogs' property
+      blogs = data.blogs; 
     } else {
       console.error("Fetched data does not contain an array in 'blogs':", data);
     }
 
+    // Display the blogs for the current page and create pagination controls
     displayBlogs();
     createPagination();
   } catch (error) {
@@ -25,16 +26,17 @@ async function fetchBlogs() {
   }
 }
 
-// Display the current page of blogs
+// Function to display the current page of blogs
 function displayBlogs() {
   blogListElement.innerHTML = "";
-
+  // Calculate the starting and ending indices for blogs on the current page
   const startIndex = (currentPage - 1) * blogsPerPage;
   const endIndex = currentPage * blogsPerPage;
 
   if (Array.isArray(blogs)) {
     const currentBlogs = blogs.slice(startIndex, endIndex);
 
+    // Loop through each blog and generate the HTML structure
     currentBlogs.forEach(blog => {
       const blogCard = `
         <div class="col-lg-3 col-md-4 col-sm-6 col-12">
@@ -56,12 +58,13 @@ function displayBlogs() {
   }
 }
 
-// Create pagination controls
+// Function to create pagination controls
 function createPagination() {
   const totalBlogs = blogs.length;
   const totalPages = Math.ceil(totalBlogs / blogsPerPage);
   paginationElement.innerHTML = "";
 
+  // Loop through and create page numbers
   for (let i = 1; i <= totalPages; i++) {
     const pageItem = document.createElement("li");
     pageItem.classList.add("page-item");
@@ -72,7 +75,7 @@ function createPagination() {
     pageLink.addEventListener("click", function(event) {
       event.preventDefault();
       currentPage = i;
-      sessionStorage.setItem('currentPage', i); // Store the current page in sessionStorage
+      sessionStorage.setItem('currentPage', i); 
       displayBlogs();
     });
 
@@ -81,10 +84,10 @@ function createPagination() {
   }
 }
 
-// Fetch blogs initially
+// Fetch blogs data when the page loads
 fetchBlogs();
 
-// Dynamically adjust blogsPerPage based on screen size
+// Dynamically adjust the number of blogs per page based on the screen size
 function adjustBlogCountBasedOnScreenSize() {
   if (window.innerWidth >= 1200) {
     blogsPerPage = 8; // For large screens (laptop and bigger)

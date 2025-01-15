@@ -1,4 +1,4 @@
-/* blog card style */
+/* blog card styling */
 .blog-card {
   display: flex;
   flex-direction: column;
@@ -20,6 +20,7 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
 }
 
+/* Image inside the blog card */
 .blog-card img {
   height: 200px;
   object-fit: cover;
@@ -31,6 +32,7 @@
   transform: scale(1.1);
 }
 
+/* Blog card title styling */
 .blog-card h5 {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -43,6 +45,7 @@
   word-wrap: break-word;
 }
 
+/* Blog card text styling */
 .blog-card p.card-text {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -57,7 +60,7 @@
   word-wrap: break-word;
 }
 
-/* Animate the cards when they enter the page */
+/* Keyframe animation to fade cards in and move them up */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -69,6 +72,7 @@
   }
 }
 
+/* Blog card body styling */
 .blog-card-body {
   flex-grow: 1;
   padding: 10px;
@@ -77,11 +81,13 @@
   justify-content: space-between;
 }
 
+/* Blog card text styling */
 .card-text {
   font-size: 0.9rem;
   margin-bottom: 10px;
 }
 
+/* Author and date section in the blog card */
 .blog-card .author-date {
   display: flex;
   justify-content: space-between;
@@ -90,6 +96,7 @@
   margin-bottom: 10px;
 }
 
+/* Button styling in the blog card */
 .blog-card .btn {
   padding: 8px 16px;
   background-color: #007bff;
@@ -115,7 +122,7 @@
   justify-content: center;
 }
 
-/* Make sure pagination looks centered */
+/* Pagination Styling */
 .pagination {
   display: flex;
   justify-content: center;
@@ -136,7 +143,9 @@
   transition: all 0.3s ease;
 }
 
-/* Blog Details Page Styling */
+
+
+/* Styling for the blog detail page i.e of blog.html styling */
 .blog-detail {
   background-color: #fff;
   padding: 20px;
@@ -147,6 +156,7 @@
   animation: fadeInUp 0.8s forwards;
 }
 
+/* Blog detail image styling */
 .blog-detail img {
   max-width: 100%;
   height: auto;
@@ -154,6 +164,7 @@
   margin-bottom: 20px;
 }
 
+/* Image responsiveness */
 @media (min-width: 768px) {
   .blog-detail img {
     max-height: 300px;
@@ -168,11 +179,13 @@
   }
 }
 
+/* Blog detail title styling */
 .blog-detail h2 {
   font-size: 2rem;
   margin-bottom: 10px;
 }
 
+/* Actions section styling */
 .actions {
   display: flex;
   justify-content: center; 
@@ -182,6 +195,7 @@
   text-align: center;   
 }
 
+/* Button styling for the actions */
 .actions button {
   font-size: 1rem;
   border: none;
@@ -196,16 +210,19 @@
   transform: scale(1.1);
 }
 
+/* Like button styling */
 .actions #like-button {
   background-color: #28a745;
   color: white;
 }
 
+/* Comment button styling */
 .actions #comment-button {
   background-color: #007bff;
   color: white;
 }
 
+/* Share button styling */
 .actions #share-button {
   background-color: #17a2b8;
   color: white;
@@ -215,6 +232,7 @@
   transform: scale(1.1);
 }
 
+/* Form and share styling */
 .comment-form-container,
 .share-options {
   display: none;
@@ -237,6 +255,7 @@
   font-size: 1rem;
   margin: 0; 
 }
+
 .show-share {
   display: flex;      
   opacity: 1;            
@@ -250,6 +269,7 @@
   transform: translateY(0);
 }
 
+/* Blog comment section styling */
 .comments-section {
   margin-top: 20px;
 }
@@ -277,38 +297,51 @@
 
 
 
-/* Styling for the create/edit form */
+/* Styling for the create/edit form i.e styling of create-blog.html*/
+/* Container styling for the form section */
 .container {
   padding-top: 20px;
 }
+
+/* Blog card styling for individual blog posts */
 .blog-card {
   transition: all 0.3s ease;
   width: 100%;
-      max-width: 600px;
-      max-height: 2000px;
+  max-width: 600px;
+  max-height: 2000px;
 }
+
 .fade-in {
   opacity: 0;
   animation: fadeIn 1s forwards;
 }
+
 @keyframes fadeIn {
   100% {
     opacity: 1;
   }
 }
+
+/* Styling for image previews in the form */
 .image-preview {
   max-width: 200px; 
   margin-top: 10px;
 }
+
+/* Form styling for the blog form */
 #blogForm {
   max-width: 600px;
   margin: 0 auto; 
 }
+
+/* Image preview styling after the user uploads an image */
 #imagePreview {
   max-width: 150px; 
   display: block;
   margin-top: 10px;
 }
+
+/* Styling for images in blog cards */
 .card-img-top {
   max-width: 500px; 
   object-fit: cover;
@@ -316,13 +349,13 @@
   margin: 0 auto; 
 }
 
-/* Ensure cards are centered and stacked one below the other */
 #blogList {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
+/* Responsive Design */
 @media (max-width: 768px) {
   .card-img-top {
     max-width: 100%;
